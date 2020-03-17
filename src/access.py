@@ -191,19 +191,3 @@ class Admin(User):
 
     def listServers(self):
         return(self.getAPI('listServers').text)
-
-
-
-# user = User('email@email.com', 'password123', '669452')
-# test = user.login()
-
-"""
-API actions = [
-"blockedAttempts",
-"userBehaviour","listActivity","listUsers","listDistinctIPs","deleteUser","toggleUserActive","listGroups","createGroup","deleteGroup",
-"sessionsCount","onlineUsersCount","failsCount","sessionsGeo","viewUserBrowserRecords","viewUserActivity","viewUserLoginRecords",
-"viewUser","loadConfig","saveConfig","sendTGMessage","viewLoginAttempts","requestsLogs","createSystemUser","syncUsers",
-"removeSystemUser","systemUserExists",
-"listServers"
-]
-"""
