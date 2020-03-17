@@ -2,6 +2,7 @@ import click
 import requests
 import os
 import json
+from src.access import User, HiddenPassword
 
 
 @click.group(invoke_without_command=False)
@@ -14,32 +15,6 @@ def bear(context):
 
 
 # bear <login>
-def accessUser(
-    email=str(), 
-    password=str(), 
-    tfa=int(), 
-    fingerprint=str(), 
-    url="https://qgg.hud.ac.uk/access/login.php"
-) -> requests.Response:
-    """
-    Provides access to the url
-    """
-    headers = { 'User-Agent': 'Mozilla/5.0' }
-    session = requests.Session()
-    response = session.post(url, headers=headers, data={
-        'email': email,
-        'password': password,
-        'tfaCode': tfa,
-        'fp': fingerprint
-    })
-    return(response)
-
-class HiddenPassword(object):
-    def __init__(self, password=''):
-        self.password = password
-    def __str__(self):
-        return '*' * len(self.password)
-
 @bear.command()
 @click.option(
     '--email',
@@ -64,15 +39,15 @@ def login(email, password, tfa, confirm):
     """
     if confirm is not True:
         check = click.prompt('Are you sure you want to login?(y/n)').lower()
-        if check in ['y', 'yes']:
+        if check in ('y', 'yes'):
             confirm = True
         else:
             confirm = False
 
-    
     if confirm:
-        response = json.loads(accessUser(email, password, tfa).text)
-        print(response.message)
+        user = User(email, password, tfa)
+        response = user.login()
+        print(response.text)
     else:
         print('exited')
 
@@ -83,7 +58,7 @@ def login(email, password, tfa, confirm):
 def logout(yes):
     if yes is not True:
         confirm = click.prompt('Are you sure?(y/n)').lower()
-        if confirm in ['y', 'yes']:
+        if confirm in ('y', 'yes'):
             yes = True
         else:
             yes = False
