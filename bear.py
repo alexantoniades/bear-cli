@@ -19,8 +19,7 @@ class ApiDB:
     def removeAPIKey(self, name):
         return(self.document.remove(Query().name == name))
 
-    @property
-    def len(self):
+    def __len__(self):
         return(len(self.document))
 
 def callAPI(action, params=dict(), api_key='', url='https://qgg.hud.ac.uk/controller/api.php'):
