@@ -1,5 +1,5 @@
 # bear-cli
-*A command-line tool for calling the bearicade API*
+*A command-line tool for calling the bearicade API (https://github.com/TA3/bearicade).*
 ## Install
 ```bash
 git clone https://github.com/alexantoniades/bear-cli.git
